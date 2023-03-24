@@ -1,5 +1,7 @@
+import { MainButton } from "../components/MainButton";
+
 export const CraftyInspire = () => {
     return (
-        <div>Hello Crafters!</div>
+        <MainButton text="sign in" />
     );
 };
