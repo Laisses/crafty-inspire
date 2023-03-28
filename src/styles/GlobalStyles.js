@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import { PRIMARY_FONT } from "../constants";
 
 export const GlobalStyle = createGlobalStyle`
     /* http://meyerweb.com/eric/tools/css/reset/
@@ -37,6 +38,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+	font-family: ${PRIMARY_FONT};
 }
 ol, ul {
 	list-style: none;
