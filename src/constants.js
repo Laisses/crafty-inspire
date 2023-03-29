@@ -17,6 +17,9 @@ export const COLORS = {
         LIGTH_GREY: "#EAEAEA",
         DARK_GREY: "#696969",
     },
+    CARD: {
+        LIGTH_GREY: "#C7C7C7",
+    },
 };
 
 export const PRIMARY_FONT = "'Inter', sans-serif;";
