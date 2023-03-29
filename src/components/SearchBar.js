@@ -35,7 +35,7 @@ const SearchContainer = styled.div`
     align-items: center;
     justify-content: center;
 
-    padding-top: 10px;
+    padding-top: 15px;
     margin-bottom: 20px;
 
     @media ${device.mobileL} {
@@ -55,6 +55,7 @@ const SearchBarContainer = styled.div`
     height: 34px;
     margin-right: 20px;
 
+    background-color: #ffffff;
     border: 1px solid ${COLORS.CARD.LIGTH_GREY};
     border-radius: 6px;
 
@@ -75,6 +76,7 @@ const SearchLogo = styled.div`
 const TextInput = styled.input`
     border: none;
     padding-left: 10px;
+
     &:focus {
         outline: none;
     }
