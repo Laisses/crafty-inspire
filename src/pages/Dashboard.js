@@ -1,22 +1,34 @@
+import styled from "styled-components";
+import { COLORS, device } from "../constants";
 import { Navbar } from "../components/Navbar";
 import { SearchBar } from "../components/SearchBar";
-import styled from "styled-components";
-import { device } from "../constants";
+import { Cards } from "../components/Cards";
 
 export const Dashboard = () => {
     return (
         <>
             <Navbar />
-            <DashboardContainer>
-                <SearchBar />
-            </DashboardContainer>
+            <Container>
+                <DashboardContainer>
+                    <SearchBar />
+                    <Cards />
+                </DashboardContainer>
+            </Container>
         </>
     );
 };
 
+const Container = styled.div`
+    background-color: ${COLORS.BACKGROUND.LIGTH_GREY};
+
+    @media ${device.mobileL} {
+        padding-top: 20px;
+    }
+`;
+
 const DashboardContainer = styled.div`
     height: 100vh;
-    max-width: 1000px;
+    max-width: 1200px;
     margin-right: auto;
     margin-left: auto;
 
