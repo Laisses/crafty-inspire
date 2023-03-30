@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { BsSearch } from "react-icons/bs";
 import { COLORS, device } from "../constants";
 import { MainButton } from "./MainButton";
+import { Link } from "react-router-dom";
 
 export const SearchBar = () => {
     return (
@@ -18,7 +19,7 @@ export const SearchBar = () => {
                     placeholder="Search..."
                 />
             </SearchBarContainer>
-            <ButtonContainer>
+            <ButtonContainer to="/submit">
                 <MainButton
                     text="add new"
                     height="34px"
@@ -98,7 +99,7 @@ const TextInput = styled.input`
     }
 `;
 
-const ButtonContainer = styled.div`
+const ButtonContainer = styled(Link)`
     @media ${device.mobileL} {
         align-self: flex-end;
     }
