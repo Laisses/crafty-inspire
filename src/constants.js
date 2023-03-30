@@ -19,6 +19,7 @@ export const COLORS = {
     },
     CARD: {
         LIGTH_GREY: "#C7C7C7",
+        DARK_GREEN: "#27403C"
     },
 };
 
