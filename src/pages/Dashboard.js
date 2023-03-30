@@ -27,7 +27,6 @@ const Container = styled.div`
 `;
 
 const DashboardContainer = styled.div`
-    height: 100vh;
     max-width: 1200px;
     margin-right: auto;
     margin-left: auto;
