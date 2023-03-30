@@ -8,7 +8,7 @@ export const SearchBar = () => {
         <SearchContainer>
             <SearchBarContainer>
                 <SearchLogo>
-                    <BsSearch color="#939393" size="14px" />
+                    <BsSearch color="#939393" size="16px" />
                 </SearchLogo>
                 <TextInput
                     type="text"
@@ -65,12 +65,20 @@ const SearchBarContainer = styled.div`
 
     @media ${device.mobileL} {
         width: 100%;
-        margin: 0 auto 10px auto;
+        margin-right: 0;
+        margin-bottom: 6px;
+        flex-direction: row-reverse;
+        justify-content: space-between
     }
 `;
 
 const SearchLogo = styled.div`
     padding-left: 10px;
+
+    @media ${device.mobileL} {
+        padding-left: 0;
+        padding-right: 10px;
+    }
 `;
 
 const TextInput = styled.input`
@@ -82,6 +90,11 @@ const TextInput = styled.input`
     }
     &::placeholder {
         color: #939393
+    }
+
+    @media ${device.mobileL} {
+        font-size: 16px;
+        padding-right: 10px;
     }
 `;
 

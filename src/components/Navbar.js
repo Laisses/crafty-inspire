@@ -43,6 +43,7 @@ const NavContainer = styled.div`
 
     @media ${device.mobileL} {
         flex-direction: column-reverse;
+        padding-bottom: 0;
     }
 `;
 
@@ -53,7 +54,7 @@ const NavHome = styled.div`
     @media ${device.mobileL} {
         justify-content: center;
         margin-top: 20px;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
 `;
 
@@ -81,7 +82,8 @@ const Projects = styled(Link)`
     color: ${COLORS.TEXT.DARK_GREEN};
 
     @media ${device.mobileL} {
-        font-size: 24px;
+        font-size: 20px;
+        color: ${COLORS.TEXT.ACCENT_GREEN};
     }
 `;
 
@@ -101,6 +103,6 @@ const User = styled.p`
 
     @media ${device.mobileL} {
         margin-right: auto;
-        font-size: 20px;
+        font-size: 18px;
     }
 `;
