@@ -44,8 +44,6 @@ const CardContainer = styled.div`
     align-items: center;
     justify-content: space-around;
 
-    cursor: pointer;
-
     @media ${device.tablet} {
         margin: 10px;
     }
@@ -55,6 +53,8 @@ const Title = styled.h1`
     font-size: 16px;
     text-align: center;
     color: ${COLORS.CARD.DARK_GREEN};
+
+    cursor: pointer;
 `;
 
 const DetailsContainer = styled.div`
@@ -67,6 +67,8 @@ const DetailsImage = styled.img`
     width: 180px;
     height: 125px;
     border-radius: 6px;
+
+    cursor: pointer;
 `;
 
 const Details = styled.div`
