@@ -19,7 +19,7 @@ export const SearchBar = () => {
                     placeholder="Search..."
                 />
             </SearchBarContainer>
-            <ButtonContainer to="/submit">
+            <ButtonContainer to="/dashboard/submit">
                 <MainButton
                     text="add new"
                     height="34px"
