@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { COLORS, device } from "../constants";
 import { MainButton } from "./MainButton";
+import { Link } from "react-router-dom";
 
 export const ProjectDisplay = () => {
     return (
@@ -11,25 +12,27 @@ export const ProjectDisplay = () => {
                 alt="Image of the project"
             />
             <DetailsContainer>
-            <DetailsTitle>Description</DetailsTitle>
-            <DetailsText>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non leo sagittis, mattis libero finibus, malesuada sapien. Sed rutrum augue mollis molestie varius. Pellentesque ut metus ac turpis suscipit condimentum nec sed justo. Ut sollicitudin, dui a volutpat venenatis, odio libero porta elit, at efficitur nibh justo ac mauris. Nullam faucibus eleifend semper. Ut at metus sem. Phasellus volutpat mollis interdum. Quisque est felis, commodo vel purus sed, lobortis lacinia ipsum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-            </DetailsText>
-            <DetailsTitle>Supplies</DetailsTitle>
-            <DetailsText>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non leo sagittis, mattis libero finibus, malesuada sapien. Sed rutrum augue mollis molestie varius. Pellentesque ut metus ac turpis suscipit condimentum nec sed justo. </p>
-            </DetailsText>
-            <DetailsTitle>Description</DetailsTitle>
-            <DetailsText>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non leo sagittis, mattis libero finibus, malesuada sapien. Sed rutrum augue mollis molestie varius. Pellentesque ut metus ac turpis suscipit condimentum nec sed justo. Ut sollicitudin, dui a volutpat venenatis, odio libero porta elit, at efficitur nibh justo ac mauris. Nullam faucibus eleifend semper. Ut at metus sem. Phasellus volutpat mollis interdum. Quisque est felis, commodo vel purus sed, lobortis lacinia ipsum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-            </DetailsText>
+                <DetailsTitle>Description</DetailsTitle>
+                <DetailsText>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non leo sagittis, mattis libero finibus, malesuada sapien. Sed rutrum augue mollis molestie varius. Pellentesque ut metus ac turpis suscipit condimentum nec sed justo. Ut sollicitudin, dui a volutpat venenatis, odio libero porta elit, at efficitur nibh justo ac mauris. Nullam faucibus eleifend semper. Ut at metus sem. Phasellus volutpat mollis interdum. Quisque est felis, commodo vel purus sed, lobortis lacinia ipsum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                </DetailsText>
+                <DetailsTitle>Supplies</DetailsTitle>
+                <DetailsText>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non leo sagittis, mattis libero finibus, malesuada sapien. Sed rutrum augue mollis molestie varius. Pellentesque ut metus ac turpis suscipit condimentum nec sed justo. </p>
+                </DetailsText>
+                <DetailsTitle>Description</DetailsTitle>
+                <DetailsText>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non leo sagittis, mattis libero finibus, malesuada sapien. Sed rutrum augue mollis molestie varius. Pellentesque ut metus ac turpis suscipit condimentum nec sed justo. Ut sollicitudin, dui a volutpat venenatis, odio libero porta elit, at efficitur nibh justo ac mauris. Nullam faucibus eleifend semper. Ut at metus sem. Phasellus volutpat mollis interdum. Quisque est felis, commodo vel purus sed, lobortis lacinia ipsum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                </DetailsText>
             </DetailsContainer>
-            <MainButton
-                text="BACK"
-                background={COLORS.BUTTON.LIGHT_PINK}
-                width="100px"
-                height="38px"
-            />
+            <ButtonContainer to="/dashboard">
+                <MainButton
+                    text="BACK"
+                    background={COLORS.BUTTON.LIGHT_PINK}
+                    width="100px"
+                    height="38px"
+                />
+            </ButtonContainer>
         </Container>
     );
 };
@@ -99,4 +102,7 @@ const DetailsText = styled.div`
             font-size: 16px;
         }
     }
+`;
+
+const ButtonContainer = styled(Link)`
 `;
