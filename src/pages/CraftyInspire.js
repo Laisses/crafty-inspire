@@ -3,6 +3,7 @@ import { SignUp } from "./SignUp";
 import { SignIn } from "./SignIn";
 import { Dashboard } from "./Dashboard";
 import { Submission } from "./Submission";
+import { Project } from "./Project";
 
 export const CraftyInspire = () => {
     return (
@@ -11,7 +12,8 @@ export const CraftyInspire = () => {
                 <Route path="/sign-in" element={<SignIn />} />
                 <Route path="/sign-up" element={<SignUp />} />
                 <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/submit" element={<Submission />} />
+                <Route path="/dashboard/submit" element={<Submission />} />
+                <Route path="/project/:id" element={<Project />}  />
             </Routes>
         </BrowserRouter>
     );
