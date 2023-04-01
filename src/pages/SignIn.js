@@ -16,14 +16,16 @@ export const SignIn = () => {
                 />
             </LeftSide>
             <RightSide>
-                <Logo
-                    src={logo}
-                    alt="Crafty Inspire logo"
-                />
+                <Link to="/">
+                    <Logo
+                        src={logo}
+                        alt="Crafty Inspire logo"
+                    />
+                </Link>
                 <Subtitle>Welcome to Crafty Inspire</Subtitle>
                 <SignInForm />
                 <Paragraph>
-                New at Crafty Inspire?  <Underline to="/sign-up">Create an account</Underline>
+                    New at Crafty Inspire?  <Underline to="/sign-up">Create an account</Underline>
                 </Paragraph>
             </RightSide>
         </Container>

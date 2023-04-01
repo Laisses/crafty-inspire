@@ -18,7 +18,7 @@ export const NavbarHome = ({ clicked }) => {
                 <Pages clicked={clicked} >Get Inspired</Pages>
             </NavHome>
             <NavInfo>
-                <ButtonContainer>
+                <ButtonContainer to="sign-in">
                     <MainButton
                         text="Sign in"
                         width="100px"
