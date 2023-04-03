@@ -8,7 +8,7 @@ export const NavbarHome = ({ whyUs, getInspired }) => {
     return (
         <NavContainer>
             <NavHome>
-                <Home to="/dashboard">
+                <Home to="/">
                     <Logo
                         src={logo}
                         alt="Logo do Crafty Inspire"
