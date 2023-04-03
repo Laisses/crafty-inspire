@@ -6,6 +6,7 @@ import { Dashboard } from "./Dashboard";
 import { Submission } from "./Submission";
 import { Project } from "./Project";
 import { WhyUs } from "./WhyUs";
+import { GetInspired } from "./GetInspired";
 
 export const CraftyInspire = () => {
     return (
@@ -13,6 +14,7 @@ export const CraftyInspire = () => {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/why-us" element={<WhyUs />} />
+                <Route path="/get-inspired" element={<GetInspired />} />
                 <Route path="/sign-in" element={<SignIn />} />
                 <Route path="/sign-up" element={<SignUp />} />
                 <Route path="/dashboard" element={<Dashboard />} />
