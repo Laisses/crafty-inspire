@@ -4,7 +4,7 @@ import logo from "../assets/logo.png";
 import { MainButton } from "../components/MainButton";
 import { COLORS, device } from "../constants";
 
-export const NavbarHome = ({ clicked }) => {
+export const NavbarHome = ({ whyUs, getInspired }) => {
     return (
         <NavContainer>
             <NavHome>
@@ -14,8 +14,8 @@ export const NavbarHome = ({ clicked }) => {
                         alt="Logo do Crafty Inspire"
                     />
                 </Home>
-                <Pages to="/why-us" clicked={clicked} >Why Crafty Inspire?</Pages>
-                <Pages to="/get-inspired" clicked={clicked} >Get Inspired</Pages>
+                <Pages to="/why-us" clicked={whyUs} >Why Crafty Inspire?</Pages>
+                <Pages to="/get-inspired" clicked={getInspired} >Get Inspired</Pages>
             </NavHome>
             <NavInfo>
                 <ButtonContainer to="sign-in">
