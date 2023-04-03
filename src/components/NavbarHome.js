@@ -14,8 +14,8 @@ export const NavbarHome = ({ clicked }) => {
                         alt="Logo do Crafty Inspire"
                     />
                 </Home>
-                <Pages clicked={clicked} >Why Crafty Inspire?</Pages>
-                <Pages clicked={clicked} >Get Inspired</Pages>
+                <Pages to="/why-us" clicked={clicked} >Why Crafty Inspire?</Pages>
+                <Pages to="/get-inspired" clicked={clicked} >Get Inspired</Pages>
             </NavHome>
             <NavInfo>
                 <ButtonContainer to="sign-in">
