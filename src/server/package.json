@@ -7,7 +7,7 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "dev": "nodemon src/server.ts",
-    "test": "jest"
+    "test": "jest --forceExit"
   },
   "author": "",
   "license": "AGPL-3.0-or-later",
