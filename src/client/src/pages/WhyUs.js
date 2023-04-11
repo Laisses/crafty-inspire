@@ -68,7 +68,7 @@ const Container = styled.div`
 `;
 
 const Banner = styled.div`
-    width: 100%;
+    width: 90%;
     height: 200px;
     background-image: url(${bannerWider});
     background-repeat: no-repeat;

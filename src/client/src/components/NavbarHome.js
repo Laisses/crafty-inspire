@@ -18,7 +18,7 @@ export const NavbarHome = ({ whyUs, getInspired }) => {
                 <Pages to="/get-inspired" clicked={getInspired} >Get Inspired</Pages>
             </NavHome>
             <NavInfo>
-                <ButtonContainer to="sign-in">
+                <ButtonContainer to="/sign-in">
                     <MainButton
                         text="Sign in"
                         width="100px"
@@ -30,7 +30,7 @@ export const NavbarHome = ({ whyUs, getInspired }) => {
                         textTransform="normal"
                     />
                 </ButtonContainer>
-                <ButtonContainer to="sign-up">
+                <ButtonContainer to="/sign-up">
                     <MainButton
                         text="Get Started"
                         width="120px"
