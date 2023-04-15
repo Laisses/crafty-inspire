@@ -16,11 +16,13 @@ CREATE TABLE projects (
 	description TEXT,
 	supplies TEXT,
 	notes TEXT
+	created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE tags (
 	id uuid NOT NULL PRIMARY KEY,
 	name TEXT NOT NULL
+	created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE projects_tags (
