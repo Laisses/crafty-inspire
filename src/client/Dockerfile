@@ -4,7 +4,7 @@ WORKDIR /tmp/react
 
 COPY . .
 
-RUN npm i
+RUN npm ci
 
 RUN chmod a+x /tmp/react/node_modules/.bin/react-scripts
 
