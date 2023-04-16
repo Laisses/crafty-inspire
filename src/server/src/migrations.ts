@@ -16,13 +16,13 @@ const runMigration = async (conn, filename) => {
 		await conn.query(`
 			INSERT INTO migrations (name) VALUES ($1);
 		`, [ filename ]);
+		await conn.query("COMMIT TRANSACTION;");
+		console.warn("DONE!");
 	} catch (e) {
 		console.warn("FAILED!");
 		await conn.query("ROLLBACK;");
 		throw e;
 	}
-	await conn.query("COMMIT TRANSACTION;");
-	console.warn("DONE!");
 };
 
 export const run = async (conn) => {
