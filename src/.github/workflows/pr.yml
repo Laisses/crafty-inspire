@@ -1,0 +1,21 @@
+name: Pull Request on Github
+on: [pull_request]
+jobs:
+  PullRequest-Github:
+    runs-on: ubunto-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Make a new envfile
+        uses: SpicyPizza/create-envfile@v1.3.1
+        with:
+          envkey_PORT: 5000
+          envkey_POSTGRES_USER: "postgres"
+          envkey_POSTGRES_PASSWORD: "postgres"
+          envkey_POSTGRES_DB: "crafty_test"
+          envkey_DATABASE_URL: "postgresql://postgres:postgres@crafty-db-test:5432/crafty_test"
+          directory: server
+          file_name: .env.test
+          fail_on_empty: true
+      - name: Run tests
+      run: docker compose -f docker-compose-test.yml run node npm run test
