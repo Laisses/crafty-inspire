@@ -1,5 +1,5 @@
 CREATE TABLE users (
-    id uuid NOT NULL PRIMARY KEY,
+	id uuid NOT NULL PRIMARY KEY,
 	username TEXT NOT NULL,
 	password TEXT NOT NULL,
 	email TEXT NOT NULL UNIQUE,
@@ -15,18 +15,18 @@ CREATE TABLE projects (
 	author TEXT,
 	description TEXT,
 	supplies TEXT,
-	notes TEXT
+	notes TEXT,
 	created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE tags (
 	id uuid NOT NULL PRIMARY KEY,
-	name TEXT NOT NULL
+	name TEXT NOT NULL,
 	created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE projects_tags (
 	project_id uuid NOT NULL REFERENCES projects(id),
 	tag_id     uuid NOT NULL REFERENCES tags(id),
-    UNIQUE(project_id, tag_id)
+	UNIQUE(project_id, tag_id)
 );
