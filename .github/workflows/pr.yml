@@ -14,8 +14,8 @@ jobs:
           envkey_POSTGRES_PASSWORD: "postgres"
           envkey_POSTGRES_DB: "crafty_test"
           envkey_DATABASE_URL: "postgresql://postgres:postgres@crafty-db-test:5432/crafty_test"
-          directory: server
+          directory: src/server
           file_name: .env.test
           fail_on_empty: true
       - name: Run tests
-      run: docker compose -f docker-compose-test.yml run node npm run test
+      run: cd src/ && docker compose -f docker-compose-test.yml run node npm run test
