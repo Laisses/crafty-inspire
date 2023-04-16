@@ -30,7 +30,5 @@ jobs:
           fail_on_empty: true
       - name: Build
         run: cd src/ && docker compose build
-      - name: Create Database
-        run: psql -h localhost -U ${{secrets.POSTGRES_USER}} -p ${{secrets.POSTGRES_PASSWORD}} 'CREATE DATABASE ${{secrets.POSTGRES_DB}};'
       - name: Run
         run: cd src/ && docker compose down && docker compose up -d
