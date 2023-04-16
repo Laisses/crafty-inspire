@@ -9,7 +9,6 @@ services:
       - server/.env
     volumes:
       - postgres-volume:/var/lib/postgresql/data
-    command: ["psql", "-c", "'CREATE DATABASE crafty_prod;'"]
 
   node:
     container_name: crafty-server
