@@ -23,7 +23,6 @@ services:
 
   react:
     container_name: crafty-client
-    restart: always
     build: ./client
     volumes:
       - react-volume:/var/www/html
