@@ -2,7 +2,7 @@ name: Pull Request on Github
 on: [pull_request]
 jobs:
   PullRequest-Github:
-    runs-on: ubunto-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
