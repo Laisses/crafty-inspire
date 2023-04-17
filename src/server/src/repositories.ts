@@ -3,7 +3,6 @@ import { connection } from "./database";
 import { NewUser, UserLogin, User } from "./protocols";
 import { v4 as uuid } from "uuid";
 
-
 export const selectUserByEmail = (email: string): Promise<QueryResult<User>> => {
     return connection.query(`SELECT FROM users WHERE email=$1;`, [email]);
 };
