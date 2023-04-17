@@ -3,10 +3,12 @@ import supertest from "supertest";
 import { connection } from "../src/database";
 import { faker } from "@faker-js/faker";
 import bcrypt from "bcrypt";
+import * as migrations from "../src/migrations";
 
 const api = supertest(app);
 
 beforeAll(async () => {
+    await migrations.run(connection);
     await connection.query(`DELETE FROM users`);
 });
 
