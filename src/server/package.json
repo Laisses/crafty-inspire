@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/src/server.js",
-    "dev": "nodemon src/server.ts",
+    "start": "node dist/src/main.js",
+    "dev": "nodemon src/main.ts",
     "test": "jest --forceExit"
   },
   "author": "",

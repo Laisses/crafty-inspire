@@ -5,12 +5,11 @@ import { faker } from "@faker-js/faker";
 import bcrypt from "bcrypt";
 import * as migrations from "../src/migrations";
 
-let api;
+const api = supertest(app);
 
 beforeAll(async () => {
     await migrations.run(connection, { verbose: false });
     await connection.query(`DELETE FROM users`);
-    api = supertest(app);
 });
 
 describe("POST /register", () => {
@@ -38,9 +37,8 @@ describe("POST /register", () => {
 
         const createUser = async ({ name, username, email, password }) => {
             const hashPassword = await bcrypt.hash(password, 10);
-            const fakeId: string = faker.datatype.uuid();
 
-            return connection.query(`INSERT INTO users (id, name, username, email, password) VALUES ($1, $2, $3, $4, $5);`, [fakeId, name, username, email, hashPassword]);
+            return connection.query(`INSERT INTO users (id, name, username, email, password) VALUES ($1, $2, $3, $4, $5);`, [faker.datatype.uuid(), name, username, email, hashPassword]);
         };
 
         it("should respond with status 409 when there is an user with given email or username", async () => {
