@@ -23,8 +23,9 @@ const apollo = new ApolloServer({
     resolvers: { ...query, ...mutation },
 });
 
-const main = async () => {
-    routes(app);
+routes(app);
+
+export const main = async () => {
     await migrations.run(connection);
 
     await apollo.start();
@@ -40,5 +41,3 @@ const main = async () => {
         console.log(`server running on port: ${PORT}`);
     });
 }
-
-main();
