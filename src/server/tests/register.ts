@@ -5,14 +5,15 @@ import { faker } from "@faker-js/faker";
 import bcrypt from "bcrypt";
 import * as migrations from "../src/migrations";
 
+let api;
+
 beforeAll(async () => {
     await migrations.run(connection, { verbose: false });
     await connection.query(`DELETE FROM users`);
+    api = supertest(app);
 });
 
 describe("POST /register", () => {
-    const api = supertest(app);
-
     it("should respond with 422 when body is not given", async () => {
         const res = await api.post("/register");
 
