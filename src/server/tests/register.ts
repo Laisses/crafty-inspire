@@ -8,7 +8,7 @@ import * as migrations from "../src/migrations";
 const api = supertest(app);
 
 beforeAll(async () => {
-    await migrations.run(connection);
+    await migrations.run(connection, { verbose: false });
     await connection.query(`DELETE FROM users`);
 });
 
