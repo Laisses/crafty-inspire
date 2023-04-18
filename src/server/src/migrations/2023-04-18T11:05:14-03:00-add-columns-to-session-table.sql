@@ -1,0 +1,4 @@
+ALTER TABLE sessions
+ADD COLUMN user_id uuid NOT NULL REFERENCES users(id),
+ADD COLUMN token uuid NOT NULL,
+ADD COLUMN created_at TIMESTAMP NOT NULL DEFAULT NOW();
