@@ -60,7 +60,7 @@ describe("DELETE /session", () => {
         expect(body.message).toEqual("Unauthorized");
     });
 
-    it("responds with 401 when the token does not fgexist", async () => {
+    it("should call the next function", async () => {
 
         const input = generateValidBody();
         await createUser(input);
