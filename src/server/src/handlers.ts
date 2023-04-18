@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { AuthenticatedRequest, NewUser, UserLogin} from "./protocols";
+import { AuthenticatedRequest, NewUser, UserLogin } from "./protocols";
 import * as r from "./repositories";
 import bcrypt from "bcrypt";
 
@@ -37,7 +37,7 @@ export const registerUser = async (req: Request, res: Response) => {
     const isUserAvailable = await checkUserAvailability(user.email, user.username);
 
     if (!isUserAvailable.available) {
-        return res.status(409).send(isUserAvailable.conflictMessage)
+        return res.status(409).send({ message: isUserAvailable.conflictMessage })
     }
 
     const hashPassword = await bcrypt.hashSync(user.password, 10);
@@ -87,13 +87,13 @@ export const login = async (req: Request, res: Response) => {
     const validUser = await validateUser(email, password);
 
     if (!validUser.validation) {
-        return res.status(401).send(validUser.unauthorizedMessage);
+        return res.status(401).send({ message: validUser.unauthorizedMessage });
     }
 
     const activeSession = await checkForActiveSession(validUser.id);
 
     if (activeSession) {
-        return res.status(401).send({message: "this account is already logged in"});
+        return res.status(401).send({ message: "this account is already logged in" });
     }
 
     const token = await r.createSession(validUser.id);
