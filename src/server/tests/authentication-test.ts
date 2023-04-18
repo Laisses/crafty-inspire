@@ -12,7 +12,7 @@ beforeAll(async () => {
     await connection.query(`DELETE FROM users`);
 });
 
-describe("DELETE /session", () => {
+describe("authentication tests", () => {
 
     it("responds with 401 when given an empty 'Authorization'", async () => {
         const req = {
