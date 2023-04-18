@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { NewUser, UserLogin, User } from "./protocols";
+import { AuthenticatedRequest, NewUser, UserLogin} from "./protocols";
 import * as r from "./repositories";
 import bcrypt from "bcrypt";
 
@@ -99,4 +99,11 @@ export const login = async (req: Request, res: Response) => {
     const token = await r.createSession(validUser.id);
 
     res.status(200).send(token.rows[0]);
+};
+
+export const endSession = async (req: AuthenticatedRequest, res: Response) => {
+    const user_id = req.user.id
+    await r.deleteSession(user_id);
+
+    res.sendStatus(200)
 };

@@ -1,6 +1,6 @@
 import { QueryResult } from "pg";
 import { connection } from "./database";
-import { NewUser, UserLogin, User } from "./protocols";
+import { NewUser, User, AuthenticatedUser } from "./protocols";
 import { v4 as uuid } from "uuid";
 
 export const selectUserByEmail = (email: string): Promise<QueryResult<User>> => {
@@ -21,4 +21,26 @@ export const selectSessionByUserId = (user_id: String): Promise<QueryResult<Stri
 
 export const createSession = (user_id: String): Promise<QueryResult<String>> => {
     return connection.query(`INSERT INTO sessions (id, user_id, token) VALUES ($1, $2, $3) RETURNING token;`, [uuid(), user_id, uuid()]);
+};
+
+export const selectUserByToken = (token: String) => {
+    return connection.query(`
+        SELECT
+            u.name,
+            u.email,
+            u.id
+        FROM
+            sessions as s
+        JOIN
+            users as u
+        ON
+            s.user_id = u.id
+        WHERE
+            token=$1
+        ;`,
+    [token]);
+};
+
+export const deleteSession = (id: String) => {
+    return connection.query(`DELETE FROM sessions WHERE user_id=$1;`, [id]);
 };
