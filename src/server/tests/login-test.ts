@@ -88,7 +88,6 @@ describe("POST /login", () => {
             await createUser(body);
 
             const user = await r.selectUserByEmail(body.email);
-            console.log("USER: ", user.rows[0]);
 
             const login = {email: body.email, password: body.password};
             const res = await api.post("/login").send(login);
