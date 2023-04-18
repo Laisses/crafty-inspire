@@ -2,13 +2,14 @@ import { app } from "../src/server";
 import supertest from "supertest";
 import { connection } from "../src/database";
 import { faker } from "@faker-js/faker";
-import bcrypt from "bcrypt";
 import * as migrations from "../src/migrations";
+import { generateValidBody, createUser } from "../src/factories/factories";
 
 const api = supertest(app);
 
 beforeAll(async () => {
     await migrations.run(connection, { verbose: false });
+    await connection.query(`DELETE FROM sessions`);
     await connection.query(`DELETE FROM users`);
 });
 
@@ -28,32 +29,30 @@ describe("POST /register", () => {
     });
 
     describe("when body is valid", () => {
-        const generateValidBody = () => ({
-            name: faker.name.firstName(),
-            username: faker.internet.userName(),
-            password: faker.internet.password(6),
-            email: faker.internet.email(),
+
+        it("should respond with status 409 when the email is already in use", async () => {
+            const body = generateValidBody();
+            await createUser(body);
+            const user = { ...body, username: "Test" }
+
+            const res = await api.post("/register").send(user);
+
+            expect(res.status).toBe(409);
+            expect(res.body.message).toMatch("user is alredy registered");
         });
 
-        const createUser = async ({ name, username, email, password }) => {
-            const hashPassword = await bcrypt.hash(password, 10);
-
-            return connection.query(`INSERT INTO users (id, name, username, email, password) VALUES ($1, $2, $3, $4, $5);`, [faker.datatype.uuid(), name, username, email, hashPassword]);
-        };
-
-        it("should respond with status 409 when there is an user with given email or username", async () => {
+        it("should respond with status 409 when the username is already in use", async () => {
             const body = generateValidBody();
             await createUser(body);
 
-            const res = await api.post("/register").send(body);
+            const user = { ...body, email: "teste@email.com" }
+
+            const res = await api.post("/register").send(user);
 
             expect(res.status).toBe(409);
-            expect(res.body).toEqual(
-                {
-                    message: "this email or username is already registered"
-                }
-            );
+            expect(res.body.message).toMatch("this username is already in use");
         });
+
 
         it("should respond with status 201 and create user when given email and username are unique", async () => {
             const body = generateValidBody();
