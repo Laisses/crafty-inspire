@@ -44,3 +44,7 @@ export const selectUserByToken = (token: String) => {
 export const deleteSession = (id: String) => {
     return connection.query(`DELETE FROM sessions WHERE user_id=$1;`, [id]);
 };
+
+export const findSession = (user_id: String) => {
+    return connection.query(`SELECT token FROM sessions WHERE user_id=$1;`, [user_id]);
+};
