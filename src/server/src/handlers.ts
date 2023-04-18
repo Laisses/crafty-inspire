@@ -11,11 +11,19 @@ const checkUserAvailability = async (email: string, username: String) => {
     const checkEmail = await r.selectUserByEmail(email);
     const checkUsername = await r.selectUserByUsername(username);
 
-    if (checkEmail.rows[0] || checkUsername.rows[0]) {
-        return false;
+    if (checkEmail.rows.length !== 0) {
+        return {
+            conflictMessage: "user is alredy registered"
+        }
     }
 
-    return true;
+    if (checkUsername.rows.length !== 0) {
+        return {
+            conflictMessage: "this username is already in use"
+        }
+    }
+
+    return {available: true};
 };
 
 export const registerUser = async (req: Request, res: Response) => {
@@ -23,8 +31,8 @@ export const registerUser = async (req: Request, res: Response) => {
 
     const isUserAvailable = await checkUserAvailability(user.email, user.username);
 
-    if (!isUserAvailable) {
-        return res.status(409).send({message: "this email or username is already registered"})
+    if (isUserAvailable.conflictMessage) {
+        return res.status(409).send(isUserAvailable.conflictMessage)
     }
 
     const hashPassword = await bcrypt.hashSync(user.password, 10);
