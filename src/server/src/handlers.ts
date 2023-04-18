@@ -105,5 +105,5 @@ export const endSession = async (req: AuthenticatedRequest, res: Response) => {
     const user_id = req.user.id
     await r.deleteSession(user_id);
 
-    res.sendStatus(200)
+    res.sendStatus(200);
 };

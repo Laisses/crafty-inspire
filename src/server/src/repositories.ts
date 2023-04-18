@@ -19,7 +19,7 @@ export const selectSessionByUserId = (user_id: String): Promise<QueryResult<Stri
     return connection.query(`SELECT token FROM sessions WHERE user_id=$1;`, [user_id]);
 };
 
-export const createSession = (user_id: String): Promise<QueryResult<String>> => {
+export const createSession = (user_id: String) => {
     return connection.query(`INSERT INTO sessions (id, user_id, token) VALUES ($1, $2, $3) RETURNING token;`, [uuid(), user_id, uuid()]);
 };
 
