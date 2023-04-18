@@ -7,4 +7,9 @@ export const routes = (app: Express) => {
     app.get("/health", h.health);
 
     app.post("/register", m.validate(s.newUser), m.asyncError(h.registerUser));
+    app.post("/login", m.validate(s.user), m.asyncError(h.login));
+
+    app.use(m.authenticate);
+
+    app.delete("/session", m.asyncError(h.endSession));
 };
