@@ -3,6 +3,18 @@ import { connection } from "./database";
 import { NewUser, User, AuthenticatedUser } from "./protocols";
 import { v4 as uuid } from "uuid";
 
+export const tx = async bodyFn => {
+    try {
+        await connection.query("BEGIN  TRANSACTION;");
+        const ret = await bodyFn();
+        await connection.query("COMMIT TRANSACTION;");
+        return ret;
+    } catch (e) {
+        await connection.query("ROLLBACK;");
+        throw e;
+    }
+};
+
 export const selectUserByEmail = (email: string): Promise<QueryResult<User>> => {
     return connection.query(`SELECT * FROM users WHERE email=$1;`, [email]);
 };
@@ -47,4 +59,103 @@ export const deleteSession = (id: String) => {
 
 export const findSession = (user_id: String) => {
     return connection.query(`SELECT * FROM sessions WHERE user_id=$1;`, [user_id]);
+};
+
+export const selectProjectsByUserID = (id: String) => {
+    return connection.query(`SELECT * FROM projects WHERE user_id=$1`, [id]);
+};
+
+export const selectProjectByID = (id: String) => {
+    return connection.query(`SELECT * FROM projects WHERE id=$1;`, [id]);
+};
+
+export const createProject = ({
+    user_id,
+    name,
+    link,
+    image,
+    author,
+    description,
+    supplies,
+    notes,
+}: {
+    user_id: string,
+    name: string,
+    link?: string,
+    image?: string,
+    author?: string,
+    description?: string,
+    supplies?: string,
+    notes?: string,
+}) => {
+    return connection.query(`
+        INSERT INTO projects (
+            id,
+            user_id,
+            name,
+            link,
+            image,
+            author,
+            description,
+            supplies,
+            notes
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+        RETURNING id;
+    `, [uuid(),
+        user_id,
+        name,
+        link,
+        image,
+        author,
+        description,
+        supplies,
+        notes,
+    ]);
+};
+
+export const updateProject = ({
+    id,
+    name,
+    link,
+    image,
+    author,
+    description,
+    supplies,
+    notes,
+}: {
+    id: String,
+    name?: string,
+    link?: string,
+    image?: string,
+    author?: string,
+    description?: string,
+    supplies?: string,
+    notes?: string,
+}) => {
+    return connection.query(`
+        UPDATE
+            projects
+        SET
+            name=$1,
+            link=$2,
+            image=$3,
+            author=$4,
+            description=$5,
+            supplies=$6,
+            notes=$7
+        WHERE
+            id=$8;
+    `, [name,
+        link,
+        image,
+        author,
+        description,
+        supplies,
+        notes,
+        id
+    ]);
+};
+
+export const deleteProject = (id: String) => {
+    return connection.query(`DELETE FROM projects WHERE id=$1;`, [id]);
 };

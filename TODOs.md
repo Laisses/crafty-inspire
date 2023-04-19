@@ -1,3 +1,11 @@
+## Do `DELETE FROM $table` only once
+
+Instead of adding a `beforeAll(...)` case for every test file that touches the database, do a `DELETE` once.  Now we have to avoid running tests in parallel to avoid one test messing with the other.
+
+## Support tags in project
+
+Even though we have the `tags` table, we don't write or read to it yet.
+
 ## Create a "search by tags" feature
 
 To be used in the current `projectsByTag` resolver.

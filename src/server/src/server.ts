@@ -10,6 +10,7 @@ import { expressMiddleware } from "@apollo/server/express4";
 import { typeDefs } from "./schema";
 import { query } from "./resolvers/query";
 import { mutation } from "./resolvers/mutation";
+import { AuthenticatedRequest } from "protocols";
 dotenv.config();
 
 export const app = express();
@@ -25,17 +26,21 @@ const apollo = new ApolloServer({
 
 routes(app);
 
-export const main = async () => {
-    await migrations.run(connection);
-
+export const build = async () => {
     await apollo.start();
     app.use("/graphql", expressMiddleware(apollo, {
-        context: async () => {
+        context: async ({ req }) => {
             return {
-                db
+                db,
+                user: (req as AuthenticatedRequest).user,
             }
         }
     }));
+};
+
+export const main = async () => {
+    await build();
+    await migrations.run(connection);
 
     app.listen(PORT, () => {
         console.log(`server running on port: ${PORT}`);
