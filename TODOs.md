@@ -1,3 +1,11 @@
+## Create a "search by tags" feature
+
+To be used in the current `projectsByTag` resolver.
+
+## validate nginx config during docker build
+
+Use `nginx -t` to validate that the config is valid when building the image.
+
 ## Automate certificate renewal
 
 The current TLS certificate was done on the host nginx, not the container, and no automatic renewal is set to happen.
