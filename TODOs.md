@@ -1,3 +1,7 @@
+## Automate certificate renewal
+
+The current TLS certificate was done on the host nginx, not the container, and no automatic renewal is set to happen.
+
 ## Setup TypeScript for frontend
 
 So we can profit from the GraphQL schema types in the frontend code.
