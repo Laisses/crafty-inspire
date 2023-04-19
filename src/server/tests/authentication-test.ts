@@ -9,6 +9,7 @@ import { AuthenticatedRequest } from "../src/protocols";
 beforeAll(async () => {
     await migrations.run(connection, { verbose: false });
     await connection.query(`DELETE FROM sessions`);
+    await connection.query(`DELETE FROM projects;`);
     await connection.query(`DELETE FROM users`);
 });
 

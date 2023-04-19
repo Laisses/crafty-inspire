@@ -1,41 +1,38 @@
-import { v4 as uuid } from "uuid";
+import * as r from "../repositories";
+
+const userOwnsProject = async (userID, projectID) => {
+    const project = (await r.selectProjectByID(projectID)).rows[0];
+    if (!project || project.user_id === userID) {
+        return false;
+    }
+    return true;
+};
 
 export const mutation = {
     Mutation: {
-        addTag: (_parent, { input }, { db }) => {
-            const { name } = input;
-
-            const newTag = {
-                id: uuid(),
-                name
+        addProject: async (_parent, { input }, { user }) => {
+            return (await r.createProject({ user_id: user.id, ...input })).rows[0];
+        },
+        updateProject: async (_parent, { input }, { user }) => {
+            if (!await userOwnsProject(user.id, input.id)) {
+                throw new Error("forbidden");
             }
-
-            db.tags.push(newTag);
-
-            return newTag;
+            return await r.updateProject(input);
         },
-        addProject: (_parent, { input }, { db }) => {
-            const newProject = {
-                ...input,
-                id: uuid(),
-            };
+        deleteProject: async (_parent, { id }, { user }) => {
+            if (!await userOwnsProject(user.id, id)) {
+                throw new Error("forbidden");
+            }
+            return await r.tx(async () => {
+                const ret = await r.selectProjectByID(id);
+                const exists = ret.rows.length !== 0;
 
-            db.projects.push(newProject);
-
-            return newProject;
+                if (!exists) {
+                    return false;
+                }
+                await r.deleteProject(id);
+                return true;
+            });
         },
-        addTagToProject: (_parent, { input }, { db }) => {
-            const {tag_id, project_id} = input;
-
-            const tag = db.tags.find(t => t.id === tag_id).name;
-            const project = db.projects.find(p => p.id === project_id);
-            project.tags.push(tag);
-
-            return project;
-        },
-        deleteProject: (_parent, { id }, { db }) => {
-            db.projects = db.projects.filter(p => p.id !== id);
-            return true;
-        }
     },
 };

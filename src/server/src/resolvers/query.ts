@@ -1,23 +1,16 @@
+import * as r from "../repositories";
+
 export const query = {
     Query: {
         health: () => {
             return "OK";
         },
-        tags: (_parents, _args, { db }) => {
-            return db.tags;
+        projects: async (_parents, _args, { user }) => {
+            return (await r.selectProjectsByUserID(user.id)).rows;
         },
-        projects: (_parents, _args, { db }) => {
-            return db.projects;
-        },
-        project: (_parents, args, { db }) => {
+        project: async (_parents, args, _context) => {
             const { id } = args;
-
-            return db.projects.find(project => project.id === id);
-        },
-        projectsByTag: (_parents, args, { db }) => {
-            const { tag } = args;
-
-            return db.projects.filter(project => project.tags.includes(tag));
+            return (await r.selectProjectByID(id)).rows[0];
         },
     },
 };

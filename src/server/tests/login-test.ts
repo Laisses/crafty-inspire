@@ -1,4 +1,4 @@
-import { app } from "../src/server";
+import { app, build } from "../src/server";
 import supertest from "supertest";
 import { connection } from "../src/database";
 import { faker } from "@faker-js/faker";
@@ -9,8 +9,10 @@ import { generateValidBody, createUser } from "../src/factories/factories";
 const api = supertest(app);
 
 beforeAll(async () => {
+    await build();
     await migrations.run(connection, { verbose: false });
     await connection.query(`DELETE FROM sessions`);
+    await connection.query(`DELETE FROM projects;`);
     await connection.query(`DELETE FROM users`);
 });
 
