@@ -1,8 +1,36 @@
+import axios from "axios";
 import styled from "styled-components";
-import { COLORS, device } from "../constants";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { BASE_URL, COLORS, device } from "../constants";
 import { MainButton } from "../components/MainButton";
 
 export const SignUpForm = () => {
+    const [loading, setLoading] = useState(false);
+    const [form, setForm] = useState({ name: "", username: "", email: "", password: "" });
+    const navigate = useNavigate();
+
+    const handleForm = e => {
+        const { name, value } = e.target;
+        setForm({ ...form, [name]: value });
+    };
+
+    const submitForm = async e => {
+        e.preventDefault();
+
+        setLoading(true);
+
+        try {
+            await axios.post(`${BASE_URL}/register`, form);
+            setLoading(false);
+            alert("Registration completed successfully");
+            navigate("/sign-in");
+        } catch (err) {
+            alert(err.response.data.message);
+            setLoading(false);
+        }
+    };
+
     return (
         <Form>
             <TextLabel htmlFor="name">Name</TextLabel>
@@ -10,6 +38,9 @@ export const SignUpForm = () => {
                 type="text"
                 id="name"
                 name="name"
+                value={form.name}
+                onChange={handleForm}
+                disabled={loading}
                 required
             />
             <TextLabel htmlFor="username">Username</TextLabel>
@@ -17,6 +48,9 @@ export const SignUpForm = () => {
                 type="text"
                 id="username"
                 name="username"
+                value={form.username}
+                onChange={handleForm}
+                disabled={loading}
                 required
             />
             <TextLabel htmlFor="email">Email</TextLabel>
@@ -24,6 +58,9 @@ export const SignUpForm = () => {
                 type="email"
                 id="email"
                 name="email"
+                value={form.email}
+                onChange={handleForm}
+                disabled={loading}
                 required
             />
             <TextLabel htmlFor="password">Password</TextLabel>
@@ -31,11 +68,21 @@ export const SignUpForm = () => {
                 type="password"
                 id="password"
                 name="password"
+                value={form.password}
+                onChange={handleForm}
+                disabled={loading}
                 required
             />
             <ButtonContainer>
                 <MainButton
-                    text="create account"
+                    onClick={e => submitForm(e)}
+                    text={
+                        loading
+                            ?
+                            "loading..."
+                            :
+                            "create account"
+                    }
                     width="160px"
                     height="40px"
                     fontSize="14px"

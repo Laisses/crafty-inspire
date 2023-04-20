@@ -1,3 +1,5 @@
+export const BASE_URL = "http://localhost:5000";
+
 export const COLORS = {
     TEXT: {
         DARK_GREEN: "#3F4B49",
