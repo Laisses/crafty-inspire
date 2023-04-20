@@ -4,7 +4,6 @@ import dotenv from "dotenv";
 import { routes } from "./routes";
 import { connection } from "./database";
 import * as migrations from "./migrations";
-import { db } from "./mock-data";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import { typeDefs } from "./schema";
@@ -31,7 +30,6 @@ export const build = async () => {
     app.use("/graphql", expressMiddleware(apollo, {
         context: async ({ req }) => {
             return {
-                db,
                 user: (req as AuthenticatedRequest).user,
             }
         }
