@@ -56,9 +56,12 @@ const validateUser = async (email: string, password: String) => {
     const user = userExistis.rows[0];
     const validPassword = bcrypt.compareSync(password, user?.password || "");
 
+    console.log(user);
+
     if (userExistis.rows.length === 0 || !validPassword) {
         return {
             validation: false,
+            name: null,
             id: null,
             unauthorizedMessage: "invalid username or password"
         };
@@ -66,6 +69,7 @@ const validateUser = async (email: string, password: String) => {
 
     return {
         validation: true,
+        name: user.name,
         id: user.id,
         unauthorizedMessage: null
     };
@@ -98,7 +102,10 @@ export const login = async (req: Request, res: Response) => {
 
     const token = await r.createSession(validUser.id);
 
-    res.status(200).send(token.rows[0]);
+    res.status(200).send({
+        name: validUser.name,
+        token: token.rows[0].token,
+    });
 };
 
 export const endSession = async (req: AuthenticatedRequest, res: Response) => {
