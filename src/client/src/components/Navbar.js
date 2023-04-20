@@ -1,10 +1,28 @@
+import axios from "axios";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { AppContext } from "../context";
 import logo from "../assets/logo.png";
 import { MainButton } from "../components/MainButton";
-import { COLORS, device } from "../constants";
+import { BASE_URL, COLORS, device } from "../constants";
 
 export const Navbar = () => {
+    const { user } = useContext(AppContext);
+    const navigate = useNavigate();
+
+    const logout = async () => {
+        const config = { headers: { Authorization: `Bearer ${user.token}` } };
+
+        try {
+            await axios.delete(`${BASE_URL}/session`, config);
+            navigate("/");
+        } catch (err) {
+            alert("something went wrong, try again later!");
+        }
+    };
+
     return (
         <NavContainer>
             <NavHome>
@@ -17,12 +35,14 @@ export const Navbar = () => {
                 <Projects to="/dashboard">My Projects</Projects>
             </NavHome>
             <NavInfo>
-                <User>Hello, Laisse Lima</User>
+                <User>Hello, {user.name}</User>
                 <MainButton
-                    text="Sign Out"
+                    onClick={logout}
+                    text="Logout"
                     width="90px"
                     height="36px"
                     fontSize="14px"
+                    textTransform="none"
                 />
             </NavInfo>
         </NavContainer>
