@@ -11,11 +11,11 @@ import { WhyUs } from "./WhyUs";
 import { GetInspired } from "./GetInspired";
 
 export const CraftyInspire = () => {
-    const [token, setToken] = useState(undefined);
+    const [user, setUser] = useState(undefined);
 
     return (
         <AppContext.Provider
-            value={{ token, setToken }}
+            value={{ user, setUser }}
         >
             <BrowserRouter>
                 <Routes>

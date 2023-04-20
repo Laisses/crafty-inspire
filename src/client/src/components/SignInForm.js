@@ -1,8 +1,42 @@
 import styled from "styled-components";
-import { COLORS, device } from "../constants";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useState, useContext } from "react";
+import { AppContext } from "../context";
+import { BASE_URL, COLORS, device } from "../constants";
 import { MainButton } from "../components/MainButton";
 
 export const SignInForm = () => {
+    const [loading, setLoading] = useState(false);
+    const [form, setForm] = useState({ email: "", password: "" });
+    const { setUser } = useContext(AppContext);
+    const navigate = useNavigate();
+
+    const handleForm = e => {
+        const { name, value } = e.target;
+        setForm({ ...form, [name]: value });
+    };
+
+    const submitForm = async e => {
+        e.preventDefault();
+
+        setLoading(true);
+
+        try {
+            const res = await axios.post(`${BASE_URL}/login`, form);
+            const user = {
+                name: res.data.name,
+                token: res.data.token,
+            };
+            setLoading(false);
+            setUser(user);
+            navigate("/dashboard");
+        } catch (err) {
+            alert(err.response.data.message);
+            setLoading(false);
+        }
+    };
+
     return (
         <Form>
             <TextLabel htmlFor="email">Email</TextLabel>
@@ -10,6 +44,9 @@ export const SignInForm = () => {
                 type="email"
                 id="email"
                 name="email"
+                value={form.email}
+                onChange={handleForm}
+                disabled={loading}
                 required
             />
             <TextLabel htmlFor="password">Password</TextLabel>
@@ -17,11 +54,21 @@ export const SignInForm = () => {
                 type="password"
                 id="password"
                 name="password"
+                value={form.password}
+                onChange={handleForm}
+                disabled={loading}
                 required
             />
             <ButtonContainer>
                 <MainButton
-                    text="sign in"
+                    onClick={e => submitForm(e)}
+                    text={
+                        loading
+                            ?
+                            "loading..."
+                            :
+                            "login"
+                    }
                     width="160px"
                     height="40px"
                     fontSize="14px"
