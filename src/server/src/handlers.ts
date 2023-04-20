@@ -56,8 +56,6 @@ const validateUser = async (email: string, password: String) => {
     const user = userExistis.rows[0];
     const validPassword = bcrypt.compareSync(password, user?.password || "");
 
-    console.log(user);
-
     if (userExistis.rows.length === 0 || !validPassword) {
         return {
             validation: false,
