@@ -21,7 +21,7 @@ export const SignUp = () => {
                         alt="Crafty Inspire logo"
                     />
                 </Link>
-                <Subtitle>Welcome to Crafty Inspire</Subtitle>
+                <Subtitle>Welcome to Crafty Inspire Update TEST</Subtitle>
                 <SignUpForm />
                 <Paragraph>
                     Already have an account? <Underline to="/sign-in">Sign-in</Underline>
