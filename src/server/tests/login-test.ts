@@ -82,7 +82,10 @@ describe("POST /login", () => {
             const token = userSession.rows[0].token;
 
             expect(res.status).toBe(200);
-            expect(res.body).toEqual({token});
+            expect(res.body).toEqual({
+                name: user.rows[0].name,
+                token
+            });
         });
 
         it("should save new session on database", async () => {
