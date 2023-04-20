@@ -12,7 +12,7 @@ RUN npm run build
 
 RUN mkdir -p /var/www/html
 
-RUN mv build/* /var/www/html
+RUN cp -R build/* /var/www/html
 
 WORKDIR /
 
