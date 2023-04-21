@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { COLORS, device } from "../constants";
-import { BsTagFill } from "react-icons/bs";
 
 export const Card = () => {
     return (
@@ -18,10 +17,6 @@ export const Card = () => {
                         <Supply>Essential Oil</Supply>
                         <Supply>Sharp Knife</Supply>
                     </Supplies>
-                    <TagsContainer>
-                        <BsTagFill width="24px" color={COLORS.BACKGROUND.LIGHT_GREEN} />
-                        <Tags>Soap</Tags>
-                    </TagsContainer>
                 </Details>
             </DetailsContainer>
         </CardContainer>
@@ -50,7 +45,7 @@ const CardContainer = styled.div`
 `;
 
 const Title = styled.h1`
-    font-size: 16px;
+    font-size: 18px;
     text-align: center;
     color: ${COLORS.CARD.DARK_GREEN};
 
@@ -75,7 +70,6 @@ const Details = styled.div`
     margin-left: 30px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
 `;
 
 const Supplies = styled.ul`
@@ -84,24 +78,13 @@ const Supplies = styled.ul`
 `;
 
 const ListTitle = styled.h2`
-    font-size: 13px;
+    font-size: 16px;
     font-weight: 300;
-    margin-bottom: 12px;
+    margin-bottom: 20px;
 `;
 
 const Supply = styled.li`
     font-size: 13px;
     font-weight: 300;
     padding-bottom: 6px;
-`;
-
-const TagsContainer = styled.div`
-    display: flex;
-`;
-
-const Tags = styled.span`
-    font-size: 12px;
-    font-weight: 300;
-    padding-left: 10px;
-    color: ${COLORS.CARD.DARK_GREEN};
 `;

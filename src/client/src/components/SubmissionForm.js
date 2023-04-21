@@ -59,14 +59,6 @@ export const SubmissionForm = () => {
                     id="notes"
                     name="notes"
                 ></TextAreaInput>
-                <TextLabel htmlFor="keywords"> Keywords
-                    <TitleComment> (separate with comma)</TitleComment>
-                </TextLabel>
-                <TextInput
-                    type="text"
-                    id="keywords"
-                    name="keywords"
-                />
                 <ButtonContainer>
                     <MainButton
                         text="create"
