@@ -66,7 +66,7 @@ export const selectProjectsByUserID = (id: String) => {
 };
 
 export const selectProjectByName = (name: String) => {
-    return connection.query(`SELECT * FROM projects WHERE name=$1;`, [name]);
+    return connection.query(`SELECT * FROM projects WHERE name ilike %$1%;`, [name]);
 };
 
 export const selectProjectByID = (id: String) => {
