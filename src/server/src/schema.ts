@@ -3,6 +3,7 @@ export const typeDefs = `#graphql
         health: String!
         projects: [Project!]!
         project(id: ID!): Project
+        projectByName(name: String): Project
     }
 
     type Mutation {
