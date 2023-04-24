@@ -4,6 +4,7 @@ import { MainButton } from "./MainButton";
 import { Link, useNavigate } from "react-router-dom";
 import { DELETE_PROJECT } from "../hooks";
 import { useMutation } from "@apollo/client";
+import ideas from "../assets/ideas.jpg";
 
 export const ProjectDisplay = ({ project }) => {
     const navigate = useNavigate();
@@ -42,7 +43,13 @@ export const ProjectDisplay = ({ project }) => {
             <Title>{project.name}</Title>
             <DetailsTitle>{project.author}</DetailsTitle>
             <Image
-                src={project.image}
+                src={
+                    project.image !== ""
+                    ?
+                    project.image
+                    :
+                    ideas
+                }
                 alt="Image of the project"
             />
             <DetailsTitle>{project.link}</DetailsTitle>
