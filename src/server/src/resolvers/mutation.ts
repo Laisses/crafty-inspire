@@ -2,7 +2,7 @@ import * as r from "../repositories";
 
 const userOwnsProject = async (userID, projectID) => {
     const project = (await r.selectProjectByID(projectID)).rows[0];
-    if (!project || project.user_id === userID) {
+    if (!project || project.user_id !== userID) {
         return false;
     }
     return true;
@@ -17,7 +17,7 @@ export const mutation = {
             if (!await userOwnsProject(user.id, input.id)) {
                 throw new Error("forbidden");
             }
-            return await r.updateProject(input);
+            return (await r.updateProject(input)).rows[0];
         },
         deleteProject: async (_parent, { id }, { user }) => {
             if (!await userOwnsProject(user.id, id)) {

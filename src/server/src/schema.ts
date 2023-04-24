@@ -21,7 +21,6 @@ export const typeDefs = `#graphql
         description: String
         supplies: String
         notes: String
-        tags: [String!]!
     }
 
     input AddProjectInput {

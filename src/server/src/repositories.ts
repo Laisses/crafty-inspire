@@ -104,7 +104,7 @@ export const createProject = ({
             supplies,
             notes
         ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-        RETURNING id;
+        RETURNING *;
     `, [uuid(),
         user_id,
         name,
@@ -148,7 +148,8 @@ export const updateProject = ({
             supplies=$6,
             notes=$7
         WHERE
-            id=$8;
+            id=$8
+            RETURNING *;
     `, [name,
         link,
         image,
@@ -161,5 +162,5 @@ export const updateProject = ({
 };
 
 export const deleteProject = (id: String) => {
-    return connection.query(`DELETE FROM projects WHERE id=$1;`, [id]);
+    return connection.query(`DELETE FROM projects WHERE id=$1 RETURNING *;`, [id]);
 };
