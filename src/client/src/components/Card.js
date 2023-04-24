@@ -1,21 +1,44 @@
 import styled from "styled-components";
 import { COLORS, device } from "../constants";
+import ideas from "../assets/ideas.jpg";
+import { useNavigate } from "react-router-dom";
 
-export const Card = () => {
+export const Card = project => {
+    const {id, name, image, supplies} = project;
+    const suppliesArray = supplies.split(", ");
+    const navigate = useNavigate();
+
+    const selectProject = () => {
+        navigate(`/project/${id}`);
+    };
+
+    const Supply = ({item })=> {
+        return (
+            <SupplyStyle>
+                {item}
+                </SupplyStyle>
+        );
+    };
+
     return (
-        <CardContainer>
-            <Title>Handmande Soap</Title>
+        <CardContainer onClick={() => selectProject()}>
+            <Title>{name}</Title>
             <DetailsContainer>
                 <DetailsImage
-                    src="https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGFuZG1hZGUlMjBzb2FwfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=1000&q=60"
+                    src=
+                    {
+                        image !== ''
+                        ?
+                        image
+                        :
+                        ideas
+                    }
                     alt="Image of the project"
                 />
                 <Details>
                     <Supplies>
                         <ListTitle>Supplies:</ListTitle>
-                        <Supply>goat milk</Supply>
-                        <Supply>Essential Oil</Supply>
-                        <Supply>Sharp Knife</Supply>
+                        {suppliesArray.map((s, index) => <Supply key={index} item={s}/>)}
                     </Supplies>
                 </Details>
             </DetailsContainer>
@@ -83,7 +106,7 @@ const ListTitle = styled.h2`
     margin-bottom: 20px;
 `;
 
-const Supply = styled.li`
+const SupplyStyle = styled.li`
     font-size: 13px;
     font-weight: 300;
     padding-bottom: 6px;

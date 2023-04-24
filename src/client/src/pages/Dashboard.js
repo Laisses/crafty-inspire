@@ -20,6 +20,7 @@ export const Dashboard = () => {
 
 const Container = styled.div`
     background-color: ${COLORS.BACKGROUND.LIGTH_GREY};
+    height: 100vh;
 
     @media ${device.mobileL} {
         padding-top: 20px;
