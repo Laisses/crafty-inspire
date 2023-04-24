@@ -2,10 +2,9 @@ import styled from "styled-components";
 import { Card } from "./Card";
 import { COLORS } from "../constants";
 import { useProjects } from "../hooks";
-import { useEffect } from "react";
 
 export const Cards = () => {
-    const { data, loading, error, refetch } = useProjects();
+    const { data, loading, error } = useProjects();
 
     const Display = () => {
         if (loading) {

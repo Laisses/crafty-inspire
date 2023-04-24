@@ -7,7 +7,16 @@ import { useMutation } from "@apollo/client";
 
 export const ProjectDisplay = ({ project }) => {
     const navigate = useNavigate();
-    const [deleteProjectMutation] = useMutation(DELETE_PROJECT);
+    const [deleteProjectMutation] = useMutation(DELETE_PROJECT, {
+        update: (cache, _) => {
+            cache.modify({
+                fields: {
+                    projects: (refs) =>
+                        refs.filter(r => r.__ref !== `Project:${project.id}`)
+                }
+            })
+        }
+    });
 
     const deleteProject = () => {
         window.confirm("Are you sure you want to delete this projetc?");

@@ -13,7 +13,7 @@ export const Navbar = () => {
     const navigate = useNavigate();
 
     const logout = async () => {
-        const config = { headers: { Authorization: `Bearer ${user.token}` } };
+        const config = { headers: { Authorization: `Bearer ${user?.token}` } };
 
         try {
             await axios.delete(`${BASE_URL}/session`, config);
@@ -35,7 +35,7 @@ export const Navbar = () => {
                 <Projects to="/dashboard">My Projects</Projects>
             </NavHome>
             <NavInfo>
-                <User>Hello, {user.name}</User>
+                <User>Hello, {user?.name}</User>
                 <MainButton
                     onClick={logout}
                     text="Logout"

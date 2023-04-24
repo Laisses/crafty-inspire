@@ -30,6 +30,13 @@ export const CREATE_PROJECT = gql`
     mutation AddProject($input: AddProjectInput) {
         addProject(input: $input) {
             id
+            name
+            link
+            image
+            author
+            description
+            supplies
+            notes
         }
     }
 `;
@@ -38,6 +45,13 @@ export const UPDATE_PROJECT = gql`
     mutation UpdateProject($input: UpdateProjectInput) {
         updateProject(input: $input) {
             id
+            name
+            link
+            image
+            author
+            description
+            supplies
+            notes
         }
     }
 `;
