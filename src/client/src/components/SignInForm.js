@@ -29,6 +29,7 @@ export const SignInForm = () => {
                 token: res.data.token,
             };
             setLoading(false);
+            localStorage.setItem("user", JSON.stringify(user));
             setUser(user);
             navigate("/dashboard");
         } catch (err) {

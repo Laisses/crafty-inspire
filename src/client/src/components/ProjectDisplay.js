@@ -1,38 +1,107 @@
 import styled from "styled-components";
 import { COLORS, device } from "../constants";
 import { MainButton } from "./MainButton";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { DELETE_PROJECT } from "../hooks";
+import { useMutation } from "@apollo/client";
+import ideas from "../assets/ideas.jpg";
 
-export const ProjectDisplay = () => {
+export const ProjectDisplay = ({ project }) => {
+    const navigate = useNavigate();
+    const [deleteProjectMutation] = useMutation(DELETE_PROJECT, {
+        update: (cache, _) => {
+            cache.modify({
+                fields: {
+                    projects: (refs) =>
+                        refs.filter(r => r.__ref !== `Project:${project.id}`)
+                }
+            })
+        }
+    });
+
+    const deleteProject = () => {
+        window.confirm("Are you sure you want to delete this projetc?");
+
+        try {
+            deleteProjectMutation({
+                variables: {
+                    deleteProjectId: project.id
+                }
+            });
+            navigate("/dashboard");
+        } catch (e) {
+            alert("Something went wrong, try again later!");
+        }
+    };
+
+    const editProject = () => {
+        navigate(`/project/edit/${project.id}`);
+    };
+
     return (
         <Container>
-            <Title>Handmade Soap</Title>
+            <Title>{project.name}</Title>
+            <DetailsTitle>{project.author}</DetailsTitle>
             <Image
-                src="https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGFuZG1hZGUlMjBzb2FwfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=1000&q=60"
+                src={
+                    project.image !== ""
+                    ?
+                    project.image
+                    :
+                    ideas
+                }
                 alt="Image of the project"
             />
+            <DetailsTitle>{project.link}</DetailsTitle>
             <DetailsContainer>
                 <DetailsTitle>Description</DetailsTitle>
                 <DetailsText>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non leo sagittis, mattis libero finibus, malesuada sapien. Sed rutrum augue mollis molestie varius. Pellentesque ut metus ac turpis suscipit condimentum nec sed justo. Ut sollicitudin, dui a volutpat venenatis, odio libero porta elit, at efficitur nibh justo ac mauris. Nullam faucibus eleifend semper. Ut at metus sem. Phasellus volutpat mollis interdum. Quisque est felis, commodo vel purus sed, lobortis lacinia ipsum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                    <p>{project.description}</p>
                 </DetailsText>
                 <DetailsTitle>Supplies</DetailsTitle>
                 <DetailsText>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non leo sagittis, mattis libero finibus, malesuada sapien. Sed rutrum augue mollis molestie varius. Pellentesque ut metus ac turpis suscipit condimentum nec sed justo. </p>
+                    <p>{project.supplies}</p>
                 </DetailsText>
-                <DetailsTitle>Description</DetailsTitle>
+                <DetailsTitle>Notes</DetailsTitle>
                 <DetailsText>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non leo sagittis, mattis libero finibus, malesuada sapien. Sed rutrum augue mollis molestie varius. Pellentesque ut metus ac turpis suscipit condimentum nec sed justo. Ut sollicitudin, dui a volutpat venenatis, odio libero porta elit, at efficitur nibh justo ac mauris. Nullam faucibus eleifend semper. Ut at metus sem. Phasellus volutpat mollis interdum. Quisque est felis, commodo vel purus sed, lobortis lacinia ipsum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                    <p>{project.notes}</p>
                 </DetailsText>
             </DetailsContainer>
-            <ButtonContainer to="/dashboard">
-                <MainButton
-                    text="BACK"
-                    background={COLORS.BUTTON.LIGHT_PINK}
-                    width="100px"
-                    height="38px"
-                />
-            </ButtonContainer>
+            <ButtonsContainer>
+                <GoBackButton to="/dashboard">
+                    <MainButton
+                        text="go back"
+                        width="80px"
+                        height="34px"
+                        color={COLORS.TEXT.DARK_GREEN}
+                        background={COLORS.BACKGROUND.ACCENT_GREY}
+                        textTransform="normal"
+                        fontWeight="400"
+                    />
+                </GoBackButton>
+                <EditButtons>
+                    <ButtonContainer onClick={() => editProject()} >
+                        <MainButton
+                            text="edit"
+                            background="#11633a"
+                            width="80px"
+                            height="34px"
+                            textTransform="normal"
+                            fontWeight="400"
+                        />
+                    </ButtonContainer>
+                    <ButtonContainer onClick={() => deleteProject()}>
+                        <MainButton
+                            text="delete"
+                            background="#c0392b"
+                            width="80px"
+                            height="34px"
+                            textTransform="normal"
+                            fontWeight="400"
+                        />
+                    </ButtonContainer>
+                </EditButtons>
+            </ButtonsContainer>
         </Container>
     );
 };
@@ -76,7 +145,7 @@ const DetailsContainer = styled.div`
 `;
 
 const DetailsTitle = styled.h2`
-    font-size: 16px;
+    font-size: 18px;
     margin: 10px 0;
     color: ${COLORS.TEXT.DARK_GREEN};
 
@@ -91,7 +160,8 @@ const DetailsText = styled.div`
     margin-bottom: 10px;
 
     p {
-        font-size: 12px;
+        font-size: 14px;
+        font-weight: 300;
         color: ${COLORS.TEXT.DARK_GREEN};
     }
 
@@ -104,5 +174,21 @@ const DetailsText = styled.div`
     }
 `;
 
-const ButtonContainer = styled(Link)`
+const ButtonsContainer = styled.div`
+    width: 100%;
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+`;
+
+const GoBackButton = styled(Link)`
+    margin-left: 20px;
+`;
+
+const EditButtons = styled.div`
+    display: flex;
+`;
+
+const ButtonContainer = styled.div`
+    margin-right: 20px;
 `;

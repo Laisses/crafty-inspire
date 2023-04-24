@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AppContext } from "../context";
 import { Home } from "./Home";
 import { SignUp } from "./SignUp";
@@ -7,11 +7,18 @@ import { SignIn } from "./SignIn";
 import { Dashboard } from "./Dashboard";
 import { Submission } from "./Submission";
 import { Project } from "./Project";
+import { EditProject } from "./EditProject";
 import { WhyUs } from "./WhyUs";
 import { GetInspired } from "./GetInspired";
 
 export const CraftyInspire = () => {
-    const [user, setUser] = useState(undefined);
+    const [user, setUser] = useState(null);
+    useEffect(() => {
+        const str = localStorage.getItem("user");
+        const u = str && JSON.parse(str);
+        setUser(u);
+    }, [setUser]);
+
 
     return (
         <AppContext.Provider
@@ -27,6 +34,8 @@ export const CraftyInspire = () => {
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/dashboard/submit" element={<Submission />} />
                     <Route path="/project/:id" element={<Project />} />
+                    <Route path="/project/edit/:id" element={<EditProject />} />
+
                 </Routes>
             </BrowserRouter>
         </AppContext.Provider>

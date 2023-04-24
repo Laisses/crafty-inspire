@@ -1,3 +1,7 @@
+## Add a filter to SearchBar component
+
+Create a filter on the parent component to "search" through the projects.
+
 ## Do `DELETE FROM $table` only once
 
 Instead of adding a `beforeAll(...)` case for every test file that touches the database, do a `DELETE` once.  Now we have to avoid running tests in parallel to avoid one test messing with the other.

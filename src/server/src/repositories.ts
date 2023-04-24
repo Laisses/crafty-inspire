@@ -23,7 +23,7 @@ export const selectUserByUsername = (username: String): Promise<QueryResult<User
     return connection.query(`SELECT * FROM users WHERE username=$1;`, [username]);
 };
 
-export const InsertNewUser = ({name, username, email, password}): Promise<QueryResult<NewUser>> => {
+export const InsertNewUser = ({ name, username, email, password }): Promise<QueryResult<NewUser>> => {
     return connection.query(`INSERT INTO users (id, name, username, email, password) VALUES ($1, $2, $3, $4, $5);`, [uuid(), name, username, email, password]);
 };
 
@@ -50,7 +50,7 @@ export const selectUserByToken = (token: String) => {
         WHERE
             token=$1
         ;`,
-    [token]);
+        [token]);
 };
 
 export const deleteSession = (id: String) => {
@@ -63,6 +63,10 @@ export const findSession = (user_id: String) => {
 
 export const selectProjectsByUserID = (id: String) => {
     return connection.query(`SELECT * FROM projects WHERE user_id=$1`, [id]);
+};
+
+export const selectProjectByName = (name: String) => {
+    return connection.query(`SELECT * FROM projects WHERE name ilike %$1%;`, [name]);
 };
 
 export const selectProjectByID = (id: String) => {
@@ -100,7 +104,7 @@ export const createProject = ({
             supplies,
             notes
         ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-        RETURNING id;
+        RETURNING *;
     `, [uuid(),
         user_id,
         name,
@@ -144,7 +148,8 @@ export const updateProject = ({
             supplies=$6,
             notes=$7
         WHERE
-            id=$8;
+            id=$8
+            RETURNING *;
     `, [name,
         link,
         image,
@@ -157,5 +162,5 @@ export const updateProject = ({
 };
 
 export const deleteProject = (id: String) => {
-    return connection.query(`DELETE FROM projects WHERE id=$1;`, [id]);
+    return connection.query(`DELETE FROM projects WHERE id=$1 RETURNING *;`, [id]);
 };

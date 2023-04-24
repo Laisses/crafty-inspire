@@ -1,49 +1,90 @@
 import styled from "styled-components";
 import { COLORS, device } from "../constants";
 import { MainButton } from "./MainButton";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-export const SubmissionForm = () => {
+export const SubmissionForm = ({ formTitle, buttonText, project, submitFn }) => {
+    const [loading, setLoading] = useState(false);
+    const [form, setForm] = useState(project);
+    const navigate = useNavigate();
+
+    const handleForm = e => {
+        const { name, value } = e.target;
+        setForm({ ...form, [name]: value });
+    };
+
+    const submitForm = e => {
+        e.preventDefault();
+
+        setLoading(true);
+
+        try {
+            submitFn({
+                variables: {
+                    input: form
+                }
+            });
+            setLoading(false);
+            navigate("/dashboard");
+        } catch (e) {
+            alert("Something went wrong, try again later!");
+            setLoading(false);
+        }
+    };
+
     return (
         <FormContainer>
             <Form>
                 <TitleContainer>
-                    <FormTitle>Create New Project</FormTitle>
+                    <FormTitle>{formTitle}</FormTitle>
                 </TitleContainer>
-                <TextLabel htmlFor="project-name">Project Name</TextLabel>
+                <TextLabel htmlFor="name">Project Name</TextLabel>
                 <TextInput
                     type="text"
-                    id="project-name"
-                    name="project-name"
+                    id="name"
+                    name="name"
+                    value={form.name}
+                    onChange={handleForm}
+                    disabled={loading}
                     required
                 />
-                <TextLabel htmlFor="html">Video or Blog post</TextLabel>
+                <TextLabel htmlFor="link">Video or Blog post</TextLabel>
                 <TextInput
                     type="text"
-                    id="html"
-                    name="html"
+                    id="link"
+                    name="link"
                     placeholder="https/..."
-                    required
+                    value={form.link}
+                    onChange={handleForm}
+                    disabled={loading}
                 />
-                <TextLabel htmlFor="file">Image</TextLabel>
-                <ImageContainer>
-                    <ImageBackground>
-                    </ImageBackground>
-                    <ChangeImageButton>
-                        <FileLabel htmlFor="file">Change Image</FileLabel>
-                        <FileInput id="file" type="file" />
-                    </ChangeImageButton>
-                </ImageContainer>
+                <TextLabel htmlFor="image">Image</TextLabel>
+                <TextInput
+                    type="text"
+                    id="image"
+                    name="image"
+                    placeholder="https/..."
+                    value={form.image}
+                    onChange={handleForm}
+                    disabled={loading}
+                />
                 <TextLabel htmlFor="author">Author</TextLabel>
                 <TextInput
                     type="text"
                     id="author"
                     name="author"
-                    required
+                    value={form.author}
+                    onChange={handleForm}
+                    disabled={loading}
                 />
                 <TextLabel htmlFor="description">Description</TextLabel>
                 <TextAreaInput
                     id="description"
                     name="description"
+                    value={form.description}
+                    onChange={handleForm}
+                    disabled={loading}
                 ></TextAreaInput>
                 <TextLabel htmlFor="supplies">Supplies
                     <TitleComment> (separate with comma)</TitleComment>
@@ -51,6 +92,9 @@ export const SubmissionForm = () => {
                 <TextAreaInput
                     id="supplies"
                     name="supplies"
+                    value={form.supplies}
+                    onChange={handleForm}
+                    disabled={loading}
                 ></TextAreaInput>
                 <TextLabel htmlFor="notes">Notes
                     <TitleComment> (anything you want to remember)</TitleComment>
@@ -58,14 +102,18 @@ export const SubmissionForm = () => {
                 <TextAreaInput
                     id="notes"
                     name="notes"
+                    value={form.notes}
+                    onChange={handleForm}
+                    disabled={loading}
                 ></TextAreaInput>
                 <ButtonContainer>
                     <MainButton
-                        text="create"
+                        text={buttonText}
                         background={COLORS.BUTTON.LIGHT_PINK}
                         width="110px"
                         height="40px"
                         fontSize="14px"
+                        onClick={(e) => submitForm(e)}
                     />
                 </ButtonContainer>
             </Form>
@@ -136,51 +184,6 @@ const TextInput = styled.input`
     &:focus {
         outline: none;
     }
-`;
-
-const ImageContainer = styled.div`
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-`;
-
-const ImageBackground = styled.div`
-    width: 260px;
-    height: 150px;
-
-    background-color: #ffffff;
-    border: 1px solid ${COLORS.FORM.LIGTH_GREY};
-    border-radius: 6px;
-`;
-
-const ChangeImageButton = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    background-color: ${COLORS.BUTTON.LIGHT_PINK};
-    border-radius: 6px;
-
-    width: 110px;
-    height: 30px;
-    margin-left: 50px;
-
-    @media ${device.mobileL} {
-        width: 140px;
-        height: 40px;
-    }
-`;
-
-const FileLabel = styled.label`
-    font-size: 14px;
-    font-weight: 400;
-    color: #ffffff;
-
-    cursor: pointer;
-`;
-
-const FileInput = styled.input`
-    display: none;
 `;
 
 const TextAreaInput = styled.textarea`

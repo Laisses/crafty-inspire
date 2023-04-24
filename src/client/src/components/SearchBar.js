@@ -85,6 +85,7 @@ const SearchLogo = styled.div`
 const TextInput = styled.input`
     border: none;
     padding-left: 10px;
+    width: 90%;
 
     &:focus {
         outline: none;

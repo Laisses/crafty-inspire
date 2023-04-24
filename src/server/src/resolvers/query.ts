@@ -12,5 +12,9 @@ export const query = {
             const { id } = args;
             return (await r.selectProjectByID(id)).rows[0];
         },
+        projectByName: async ({ _parents, args, _context }) => {
+            const { name } = args;
+            return (await r.selectProjectByName(name)).rows;
+        },
     },
 };
