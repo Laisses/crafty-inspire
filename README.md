@@ -4,7 +4,7 @@
 
 Crafty Inspire is an open-source project for an online platform dedicated to manage DIY projects. You can save your craft ideas and add tags, materials, descriptions and other useful information for working with it later.
 
-<!-- screenshot -->
+![](src/client/src/assets/screenshot.jpg)
 
 ## Usage
 
