@@ -1,70 +1,88 @@
-# Getting Started with Create React App
+![](src/client/src/assets/logo.png)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Crafty Inspire
 
-## Available Scripts
+Crafty Inspire is an open-source project for an online platform dedicated to manage DIY projects. You can save your craft ideas and add tags, materials, descriptions and other useful information for working with it later.
 
-In the project directory, you can run:
+<!-- screenshot -->
 
-### `npm start`
+## Usage
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+To get the full system up locally, use `docker compose`:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```shell
+$ cd src
+$ docker compose build
+$ docker compose up
+```
 
-### `npm test`
+This will:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- build the client assets, including the JavaScript production bundle;
+- start nginx on port 8080 to serve those assets;
+- start the Node.js server on port 5000;
+- start PostgreSQL on port 5433.
 
-### `npm run build`
+Then open http://localhost:8080, register an user and interact with the project.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Overview
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+This repository contains the full code of the React client application, Node.js web application and infrastructure configurations.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Directory structure
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Under `src/`, we have 3 main components:
+- `client/`: the self-contained React application;
+- `server/`: the standalone Node.js express server, using Apollo server for exposing the API via GraphQL;
+- `infrastructure/`: deployment configuration files.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Each of those has its own `Dockerfile` that is also consumed by the top-level `src/docker-compose.yml`.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```
+src/
+  client/
+    Dockerfile
+    package.json
+    src/
+      *.js
+  server/
+    Dockerfile
+    package.json
+    src/
+      *.ts
+    tests/
+      *.ts
+  infrastructure/
+    Dockerfile
+    nginx.conf
+  docker-compose.yml
+```
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Authentication and authorization
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The auth API is done via 2 REST endpoints: `/register` and `/login`.  The login response contains a JSON body with the session token in it, that the client application stores on `localStorage` for future accesses.
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### API and database schema
 
-### Analyzing the Bundle Size
+The [GraphQL API](src/server/src/schema.ts) is served under `/api/graphql`, and requires the requests to be authenticated via the `Authentication: Bearer XXX` header.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+The main entity of the [database schema](src/server/src/migrations/) is the `projects` table, which gets exposed via GraphQL as the `Project` type.
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Development tooling
 
-### Advanced Configuration
+Both `src/client/` and `src/server/` have their own `package.json` file, which contains the canonical scrips for testing and running the applications.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-### Deployment
+## Contributing
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+PRs are welcome.  Make sure to adapt or add tests to the affected lines of code.
 
-### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## License
+
+All source code is under [AGPL 3.0 or later](https://www.gnu.org/licenses/agpl-3.0.html).  Images are under the [Unsplash free license](https://unsplash.com/license).
