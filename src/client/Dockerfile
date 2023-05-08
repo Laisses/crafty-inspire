@@ -12,8 +12,6 @@ RUN npm run build
 
 RUN mkdir -p /var/www/html
 
-RUN cp -R build/* /var/www/html
+WORKDIR /tmp/react/build
 
-WORKDIR /
-
-RUN rm -rf /tmp/react
+CMD ["cp", "-R", ".", "/var/www/html"]
