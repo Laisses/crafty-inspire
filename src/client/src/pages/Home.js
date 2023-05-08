@@ -13,7 +13,7 @@ export const Home = () => {
             <Container>
                 <LeftSide>
                     <Title>
-                        Create with confidence:
+                        Create with confidence UPDATE test:
                         <br />
                         <ConstrastWord>never</ConstrastWord> forget a project again
                     </Title>
